@@ -1,0 +1,17 @@
+*{
+    margin:0;
+    padding:0;
+    box-sizing:border-box;
+}
+
+.left-side-bar{
+    display:flex;
+}
+
+.sidebar{
+    min-height:800px;
+}
+
+.right-side-div{
+    width:100%;
+}
