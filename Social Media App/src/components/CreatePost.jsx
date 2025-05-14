@@ -1,37 +1,34 @@
 const CreatePost = () => {
   return (
     <>
-      <form>
+      <form className="create-post">
         <div className="mb-3">
-          <label htmlFor="exampleInputEmail1" className="form-label">
-            Email address
+          <label htmlFor="create-post" className="form-label">
+            Post-Title
           </label>
           <input
-            type="email"
+            type="text"
             className="form-control"
             id="exampleInputEmail1"
             aria-describedby="emailHelp"
+            placeholder="How are you feeling today"
           />
-          <div id="emailHelp" className="form-text">
-            We'll never share your email with anyone else.
-          </div>
         </div>
         <div className="mb-3">
-          <label htmlFor="exampleInputPassword1" className="form-label">
-            Password
+          <label htmlFor="body" className="form-label">
+            Post Content
           </label>
-          <input
-            type="password"
+          <textarea
+            rows='5'
+            type="text"
             className="form-control"
-            id="exampleInputPassword1"
+            id="exampleInputEmail1"
+            aria-describedby="emailHelp"
+            placeholder="Tell us more about it"
+            
           />
         </div>
-        <div className="mb-3 form-check">
-          <input type="checkbox" className="form-check-input" id="exampleCheck1" />
-          <label className="form-check-label" htmlFor="exampleCheck1">
-            Check me out
-          </label>
-        </div>
+       
         <button type="submit" className="btn btn-primary">
           Submit
         </button>
