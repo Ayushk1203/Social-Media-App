@@ -1,6 +1,6 @@
 const Sidebar = ({selectedTab,setSelectedTab}) => {
     return (
-        <div className="d-flex flex-column sidebar flex-shrink-0 p-3 text-bg-dark" style={{ width: '280px' }}>
+        <div className="d-flex flex-column sidebar flex-shrink-0 p-3 text-bg-dark" style={{ width: '180px' }}>
             <a href="/" className="d-flex align-items-center mb-3 mb-md-0 me-md-auto text-white text-decoration-none">
                 <svg className="bi pe-none me-2" width="40" height="32" aria-hidden="true">
                     <use xlinkHref="#bootstrap"></use>

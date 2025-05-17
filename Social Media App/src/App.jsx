@@ -20,8 +20,8 @@ function App() {
         <div className="right-side-div">
           
           <Header></Header>
-          {selectedTab === 'Home' && <CreatePost></CreatePost>}
-          {selectedTab === 'Create-Post' && <PostList></PostList>}
+          {selectedTab === 'Home' && <PostList></PostList>}
+          {selectedTab === 'Create-Post' && <CreatePost></CreatePost>}
           
           <Footer></Footer>
         </div>

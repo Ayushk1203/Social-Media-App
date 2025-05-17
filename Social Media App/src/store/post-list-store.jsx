@@ -1,59 +1,78 @@
-import { createContext,useReducer } from "react";
+import { createContext, useReducer } from "react";
 
 export const PostList = createContext({
-    postList : [],
-    addNewPost : ()=>{},
-    deletePost : () =>{}
+  postList: [],
+  addNewPost: () => {},
+  deletePost: () => {},
+  addInitialPosts:()=>{}
+});
 
- });
-    
-const postListReducer = (currPostList,action) =>{
-    let newPostList = currPostList;
-    if(action.type === "ADD_POST"){
+const postListReducer = (currPostList, action) => {
+  let newPostList = currPostList;
+  if (action.type === "ADD_POST") {
+    newPostList = [action.payload,...currPostList];  
+  }else if(action.type === 'ADD_INITIAL_POSTS'){
+    newPostList = action.payload.posts;
+  } 
+  else if (action.type === "DELETE_POST") {
+    newPostList = currPostList.filter(
+      (post) => post.id !== action.payload.postId
+    );
+  }
+  return newPostList;
+};
 
-    }else if(action.type === "DELETE_POST"){
-        newPostList = currPostList.filter((post) => post.id !== action.payload.postId);
-    }
-    return newPostList;
-}
+const PostListProvider = ({ children }) => {
+  const [postList, dispatchPostList] = useReducer(
+    postListReducer,
+    []
+  );
 
-const PostListProvider = ({children}) =>{
-    
-     const [postList,dispatchPostList] =useReducer(postListReducer,DEFAULT_POST_LIST);
+  const addNewPost = (userId, postTitle, postBody, postReactions, postTags) => {
+    dispatchPostList({
+      type: "ADD_POST",
+      payload: {
+        id: Date.now(),
+        title: postTitle,
+        body: postBody,
+        reactions: postReactions,
+        userId: userId,
+        tags: postTags,
+      },
+    });
+  };
+  
+ const addInitialPosts = (posts) => {
+  const normalizedPosts = posts.map(post => ({
+    ...post,
+    reactions:
+      typeof post.reactions === "object"
+        ? (post.reactions.likes || 0) + (post.reactions.dislikes || 0)
+        : post.reactions,
+  }));
 
-    const addNewPost = () =>{
+  dispatchPostList({
+    type: "ADD_INITIAL_POSTS",
+    payload: { posts: normalizedPosts },
+  });
+};
+  
+  const deletePost = (postId) => {
+    dispatchPostList({
+      type: "DELETE_POST",
+      payload: {
+        postId,
+      },
+    });
+  };
 
-    }
-    const deletePost = (postId) =>{
-        
-        dispatchPostList({
-            type:'DELETE_POST',
-            payload: {
-                postId
-            }
-        })
-    }
+  return (
+    <PostList.Provider value={{ postList, addNewPost, deletePost,addInitialPosts }}>
+      {children}
+    </PostList.Provider>
+  );
+};
 
-    return <PostList.Provider value={{postList,addNewPost,deletePost}}>{children}</PostList.Provider>
-}
 
-const DEFAULT_POST_LIST = [{
-    id : '1',
-    title: 'Going to Mumbai',
-    body : 'I am going to Mumbai for my vacations. Hope to enjoy a lot',
-    reactions : 2,
-    userId: 'user-g9',
-    tags : ['vacation', 'Mumbai', 'Enjoying']
-},
-{
-    id : '2',
-    title: 'Having Fun',
-    body : 'Played cricket with my friends',
-    reactions : 3,
-    userId: 'user-g10',
-    tags : ['Cricket','Fun']
-}
-
-]
 
 export default PostListProvider;
